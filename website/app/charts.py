@@ -127,7 +127,7 @@ def map_figure(data, measure):
     fig = px.scatter_mapbox(
         buildings, lat='latitude', lon='longitude', color=col,
         color_continuous_scale=SEQUENTIAL_BLUE, size_max=8, zoom=9.4,
-        center={'lat': 40.71, 'lon': -73.94}, mapbox_style='carto-positron',
+        center={'lat': 40.71, 'lon': -73.94}, mapbox_style='open-street-map',
         hover_name='project_name',
         hover_data={'borough': True, 'all_counted_units': True, 'reporting_construction_type': True,
                     col: ':.1f', 'latitude': False, 'longitude': False},
