@@ -13,7 +13,9 @@ import charts
 DATA = charts.load_data()
 YEARS = sorted(set(DATA['buildings']['start_year']) | set(DATA['borough_year']['year']))
 
-app = Dash(__name__, title='NYC Affordable Housing & Street Safety')
+FONTS = ('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700'
+         '&family=Public+Sans:wght@400;500;600;700&display=swap')
+app = Dash(__name__, title='NYC Affordable Housing & Street Safety', external_stylesheets=[FONTS])
 server = app.server  # used by gunicorn on Render
 
 
@@ -50,22 +52,34 @@ def kpi(id_, label):
     return html.Div(className='kpi', children=[html.Div(id=id_, className='kpi-value'), html.Div(label, className='kpi-label')])
 
 
+def street_sign(text):
+    """Section heading styled like an NYC street name sign."""
+    return html.H2(html.Span(text, className='sign'), className='section-heading')
+
+
 def graph(id_):
     return dcc.Graph(id=id_, className='chart', config={'displaylogo': False, 'responsive': True})
 
 
-app.layout = html.Div(className='page', children=[
-    html.Header(className='header', children=[
-        html.H1('Is NYC building affordable homes on its most dangerous streets?'),
-        html.P('Affordable Housing Production by Building (HPD) linked with serious-injury crashes (NYC DOT SIRTA), '
-               '2022–2026. Each building is matched to the serious crashes within 500 m.'),
+app.layout = html.Div(className='site', children=[
+    html.Header(className='hero', children=[
+        html.Div(className='hero-inner', children=[
+            html.H1('Is NYC building affordable homes on its most dangerous streets?'),
+            html.P('We matched every affordable housing building the city financed or preserved since 2014 with the '
+                   'serious-injury and fatal crashes within 500 m of it, a six-minute walk, from January 2022 to June 2026.',
+                   className='hero-lede'),
+            html.P('Sources: Affordable Housing Production by Building (HPD) and the Serious Injury Response, Tracking '
+                   '& Analysis Program (NYC DOT).', className='hero-source'),
+        ]),
+        html.Div(className='crosswalk', **{'aria-hidden': 'true'}),
     ]),
 
+    html.Main(className='page', children=[
     # Filters
-    html.Section(className='card controls', children=[
+    html.Section(className='controls', children=[
         html.Div(className='search-row', children=[
             dcc.Input(id='search-box', type='text', debounce=False, className='search-box',
-                      placeholder='Search, e.g. "Brooklyn 2022 new buildings fatal" and press Enter'),
+                      placeholder='Search, e.g. "Brooklyn 2022 new buildings fatal", then press Enter'),
             html.Button('Apply search', id='search-button', className='button secondary'),
         ]),
         html.Div(id='search-feedback', className='feedback'),
@@ -92,6 +106,7 @@ app.layout = html.Div(className='page', children=[
     ]),
 
     # Overview charts
+    street_sign('Overview'),
     html.Section(className='card', children=[graph('map-chart')]),
     html.Section(className='grid', children=[
         html.Div(className='card', children=[graph('housing-year-chart')]),
@@ -99,14 +114,14 @@ app.layout = html.Div(className='page', children=[
     ]),
 
     # Research questions (filled from charts.RESEARCH_QUESTIONS)
-    html.H2('Research questions'),
+    street_sign('Research questions'),
     html.P('Ten questions, two per team member. Every chart and summary updates with the filters and the '
            'Generate Report button.', className='section-intro'),
     html.Div(id='research-questions'),
 
     # Story
-    html.Section(className='card story', children=[
-        html.H2('The story'),
+    street_sign('The story'),
+    html.Section(className='story', children=[
         html.H3('Our question'),
         html.P('Affordable housing is home to New York\'s lowest-income residents, who walk and take transit more than '
                'anyone. We asked whether the city is building and preserving these homes near the streets where '
@@ -136,6 +151,7 @@ app.layout = html.Div(className='page', children=[
         html.P('Street-safety improvements such as safer crossings and traffic calming could be planned together with '
                'new affordable developments, so the residents who depend most on walking are not placed on the most '
                'dangerous streets.'),
+    ]),
     ]),
     html.Footer('Data: NYC Open Data, Affordable Housing Production by Building (hg8x-zxpr) and SIRTA (xeqp-qz8h).',
                 className='footer'),
@@ -187,7 +203,10 @@ def generate_report(_clicks, _search, boroughs, years, types, measure_key):
 
     question_cards = []
     for q in sorted(charts.RESEARCH_QUESTIONS, key=lambda q: q['number']):
-        meta = html.Div(f"Question {q['number']} · {charts.MEMBERS[q['member']]}", className='question-meta')
+        meta = html.Div(className='question-meta', children=[
+            html.Span(f"Q{q['number']}", className='q-sign'),
+            html.Span(charts.MEMBERS[q['member']], className='q-member'),
+        ])
         if q['figure'] is None:
             question_cards.append(html.Section(className='card question placeholder', children=[
                 meta, html.P('To be added.', className='takeaway')]))
