@@ -54,9 +54,9 @@ MEASURES = {
 
 CHART_LAYOUT = dict(
     template='plotly_white',
-    paper_bgcolor='#fcfcfb', plot_bgcolor='#fcfcfb',
-    font=dict(family='Inter, Segoe UI, Arial, sans-serif', size=13, color='#52514e'),
-    title_font=dict(size=16, color='#0b0b0b'),
+    paper_bgcolor='#ffffff', plot_bgcolor='#ffffff',
+    font=dict(family='Public Sans, Segoe UI, Arial, sans-serif', size=13, color='#5a646b'),
+    title_font=dict(family='Barlow Condensed, Arial Narrow, sans-serif', size=20, color='#1b2124'),
     margin=dict(l=60, r=20, t=60, b=110),
     hoverlabel=dict(bgcolor='white', font_size=13),
     legend=dict(orientation='h', yanchor='top', y=-0.2, xanchor='left', x=0, title_text=''),
@@ -107,8 +107,8 @@ def apply_filters(data, boroughs, years, construction_types):
 # ================================================================ helpers
 def style(fig, height=470):
     fig.update_layout(**CHART_LAYOUT, height=height)
-    fig.update_xaxes(showgrid=False, linecolor='#c3c2b7')
-    fig.update_yaxes(gridcolor='#ecebe7', zeroline=False)
+    fig.update_xaxes(showgrid=False, linecolor='#c9d0cd')
+    fig.update_yaxes(gridcolor='#e8ecea', zeroline=False)
     return fig
 
 
@@ -329,7 +329,7 @@ def make_q5(data, measure):
                  color_discrete_sequence=['#2a78d6', '#eb6834'], category_orders={'borough': BOROUGHS},
                  labels={'pct': '% of buildings with a fatal crash within 500 m', 'borough': 'Borough', 'group': ''},
                  title='Affordable buildings with at least one fatal crash within 500 m (2022–2026)')
-    fig.update_traces(marker_line_width=2, marker_line_color='#fcfcfb')
+    fig.update_traces(marker_line_width=2, marker_line_color='#ffffff')
     return style(fig)
 
 
@@ -367,7 +367,7 @@ def make_q6(data, measure):
                  labels={'affordable_units': 'Affordable units', 'borough': 'Borough',
                          'danger_band': 'Serious crashes within 500 m'},
                  title='Affordable units by danger band (serious crashes within 500 m per year)')
-    fig.update_traces(marker_line_width=2, marker_line_color='#fcfcfb')
+    fig.update_traces(marker_line_width=2, marker_line_color='#ffffff')
     return style(fig)
 
 
@@ -400,7 +400,7 @@ def make_q7(data, measure):
                  color_discrete_sequence=['#2a78d6', '#eb6834'], category_orders={'borough': BOROUGHS},
                  labels={'share': '% of the selected total (2022–2025)', 'borough': 'Borough', 'measure': ''},
                  title=f"Each borough's share of new affordable housing vs share of {label}")
-    fig.update_traces(marker_line_width=2, marker_line_color='#fcfcfb')
+    fig.update_traces(marker_line_width=2, marker_line_color='#ffffff')
     return style(fig)
 
 
@@ -456,7 +456,7 @@ def make_q9(data, measure):
                      labels={'all_counted_units': 'Affordable units in the building (log scale)',
                              col: f'{measure["label"]} within 500 m per year', 'borough': 'Borough'},
                      title=f'Building size vs {measure["label"].lower()} nearby')
-    fig.update_traces(marker=dict(size=8, line=dict(width=1, color='#fcfcfb')))
+    fig.update_traces(marker=dict(size=8, line=dict(width=1, color='#ffffff')))
     if len(buildings) > 2 and buildings['all_counted_units'].nunique() > 1:
         log_units = np.log10(buildings['all_counted_units'])
         slope, intercept = np.polyfit(log_units, buildings[col], 1)
