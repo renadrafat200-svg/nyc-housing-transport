@@ -106,12 +106,10 @@ The website can also be deployed on Render or any host that runs Python: the sta
 
 ## Team members and contributions
 
-| Member | Name | ID | Research questions | Contributions |
-|---|---|---|---|---|
-| 1 | Nadeen Yasser | 16007617 | Q1, Q2 | [describe what Nadeen did] |
-| 2 | Renad Raafat | 16002716 | Q3, Q4 | Dataset selection; notebook sections 1–5 (dataset overview, EDA, pre-integration cleaning, spatial and borough–year integration, post-integration cleaning); research questions 3 and 4; Dash website; deployment on PythonAnywhere; GitHub repository; sections 7 and 8 |
-| 3 | Malak Ehab | 16004428 | Q5, Q6 | [describe what Malak did] |
-| 4 | Joudy Hagar | 16001246 | Q7, Q8 | [describe what Joudy did] |
-| 5 | Noor Eldin | [ID] | Q9, Q10 | [describe what Noor did] |
-
+Member	Name	ID	Research questions	Contributions
+1	Nadeen Yasser	16007617	Q1, Q2	Section 4: Spatial integration using a 500-metre radius, filtering highway-related crashes, creating the borough–year dataset; research questions 1 and 2, including income-group crash exposure and identifying double-burden ZIP codes.
+2	Renad Raafat	16002716	Q3, Q4	Dataset selection; notebook sections 1–3 (dataset overview, EDA and pre-integration cleaning); research questions 3 and 4; Dash website development; deployment on PythonAnywhere; GitHub repository management; documentation and notebook sections 7 and 8.
+3	Malak Ehab	16004428	Q5, Q6	Section 5: Post-integration data validation and cleaning, checking missing values, aggregate totals and unusual records; research questions 5 and 6, analysing fatal-crash exposure and comparing affordable housing across danger categories.
+4	Joudy Hagar	16001246	Q7, Q8	Research questions 7 and 8: Comparing affordable housing production shares with serious-crash shares across boroughs, and analysing year-to-year changes in housing production and crash numbers from 2022 to 2025.
+5	Noor Eldin	[16009523]	Q9, Q10	Research questions 9 and 10: Examining the relationship between building size and nearby crash exposure using Spearman correlation, identifying the top 10% most exposed buildings and visualising their geographical locations.
 AI assistance used in the project is documented in section 7 of the notebook.
